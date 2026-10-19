@@ -1,0 +1,185 @@
+<title>Irwin Automation Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one long case study. Facts strip first, screenshots as the main evidence, then how it works and what broke. */
+:root{
+  --bg:#0a0f1a; --surface:#111827; --line:#1f2a3d; --fg:#e8edf6; --muted:#8c98ad;
+  --accent:#5b9cff; --ok:#3ddc97;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#f4f6fa; --surface:#ffffff; --line:#d9e0ec; --fg:#0f1728; --muted:#52607a;
+    --accent:#1d5fd1; --ok:#12805a; color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f4f6fa; --surface:#ffffff; --line:#d9e0ec; --fg:#0f1728; --muted:#52607a;
+  --accent:#1d5fd1; --ok:#12805a; color-scheme:light;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:16px; line-height:1.6;
+  padding-block:48px 72px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.12;font-weight:600;letter-spacing:-.02em;margin:10px 0 16px;text-wrap:balance;max-width:20ch}
+h2{font-size:13px;font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+p{margin:0}
+.lede{color:var(--muted);max-width:62ch;font-size:17px}
+.top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+.pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.stat{padding:20px 22px;border-left:1px solid var(--line);min-width:0}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:var(--mono);font-weight:500;font-size:30px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:13px}
+.src{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:10px}
+
+figure{margin:0;display:flex;flex-direction:column;gap:12px}
+.shot{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.shot img{display:block;width:100%;height:auto}
+.shot:focus-visible,.pill:focus-visible,.close:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+figcaption{color:var(--muted);font-size:14px;max-width:70ch}
+figcaption b{color:var(--fg);font-weight:500}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media (max-width:760px){.pair{grid-template-columns:1fr}.stat{border-left:0;border-top:1px solid var(--line)}.stat:first-child{border-top:0}}
+
+.wf{width:100%;border-collapse:collapse;font-size:15px}
+.wf td{padding:12px 14px 12px 0;border-top:1px solid var(--line);vertical-align:top}
+.wf td:first-child{font-family:var(--mono);color:var(--accent);white-space:nowrap;width:1%}
+.wf td:nth-child(2){font-weight:500;white-space:nowrap;padding-right:28px}
+.wf td:last-child{color:var(--muted)}
+.scroll{overflow-x:auto}
+.scroll .wf{min-width:620px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+@media (max-width:760px){.two{grid-template-columns:1fr;gap:48px}}
+.stack{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.stack li{font-family:var(--mono);font-size:13px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 12px}
+.fix{display:flex;flex-direction:column;gap:22px;list-style:none;margin:0;padding:0}
+.fix li{display:grid;gap:4px;min-width:0}
+.fix b{font-weight:600}
+.fix span{color:var(--muted);font-size:15px}
+.fix em{font-style:normal;color:var(--fg)}
+.foot{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:14px;max-width:70ch}
+
+.lb{position:fixed;inset:0;z-index:50;background:rgba(5,8,14,.94);overflow:auto;padding:56px 16px 24px;display:none}
+.lb.open{display:block}
+.lb img{display:block;max-width:none;width:min(1913px,max(100%,1200px));height:auto;margin:0 auto;border-radius:6px}
+.close{position:fixed;top:12px;right:max(12px,env(safe-area-inset-right,0px));z-index:51;font-family:var(--mono);font-size:13px;background:#111827;color:#e8edf6;border:1px solid #2a3750;border-radius:8px;padding:8px 14px;cursor:pointer;display:none}
+.lb.open ~ .close{display:block}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<main class="wrap">
+  <header>
+    <div class="top">
+      <span class="eyebrow">Irwin · Automation portfolio</span>
+      <span class="pill"><i></i>Open to freelance automation work</span>
+    </div>
+    <h1>Accounting App for card spend</h1>
+    <p class="lede">A client project for a US company. It pulls card transactions from Plaid, asks each cardholder to respond in Slack, tracks replies on a live dashboard, and pushes completed items to QuickBooks. I built and run the whole system. Client name withheld.</p>
+  </header>
+
+  <section aria-label="Production numbers">
+    <div class="stats">
+      <div class="stat"><b>7</b><span>published n8n workflows</span></div>
+      <div class="stat"><b>804</b><span>production executions</span></div>
+      <div class="stat"><b>0.2%</b><span>failure rate (2 failed runs)</span></div>
+      <div class="stat"><b>11.9s</b><span>average run time</span></div>
+    </div>
+    <p class="src">Source: n8n overview screen, shown below.</p>
+  </section>
+
+  <section>
+    <h2>The dashboard</h2>
+    <figure>
+      <button class="shot" type="button" data-full="img/02-dashboard.png" aria-label="Open dashboard screenshot full size">
+        <img src="img/02-dashboard.png" width="1919" height="789" alt="Dark dashboard titled Overview. Cards show 29 transactions today, 22 pending response, 2 completed and filed, and $2,013 total spend. Below are a spending-by-project chart, a by-cardholder donut chart, recent transactions, and a needs-attention list. Status dots for n8n, Slack, Sheets, QuickBooks and Plaid are green.">
+      </button>
+      <figcaption><b>Overview.</b> Daily counts, pending cardholder replies, spend by project and by cardholder, and a needs-attention list. Status dots in the header show whether n8n, Slack, Sheets, QuickBooks and Plaid are up. Project names are blurred. Click to enlarge.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Access and operations</h2>
+    <div class="pair">
+      <figure>
+        <button class="shot" type="button" data-full="img/01-login.png" aria-label="Open sign-in screenshot full size">
+          <img src="img/01-login.png" width="1913" height="890" alt="Sign-in card for the Accounting App with a single Google sign-in button and the note that access is restricted to authorised accounts.">
+        </button>
+        <figcaption><b>Sign-in.</b> Google sign-in only, limited to authorised accounts. Account details and client name are hidden.</figcaption>
+      </figure>
+      <figure>
+        <button class="shot" type="button" data-full="img/03-n8n.png" aria-label="Open n8n screenshot full size">
+          <img src="img/03-n8n.png" width="1045" height="838" alt="n8n overview showing 804 production executions, 2 failed, a 0.2% failure rate and 11.87 second average run time, above a list of eight workflows named WF-1 to WF-6, WF-2b and a Plaid sandbox test seeder.">
+        </button>
+        <figcaption><b>n8n overview.</b> The workflow engine behind the app, self-hosted, with its run counts and failure rate.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Workflows</h2>
+    <div class="scroll">
+      <table class="wf">
+        <tr><td>WF-1</td><td>Plaid Ingest</td><td>Pulls transactions from Plaid and rebuilds the dashboard HTML.</td></tr>
+        <tr><td>WF-2</td><td>Slack Cardholder Notification</td><td>Messages the cardholder about a new transaction.</td></tr>
+        <tr><td>WF-2b</td><td>Slack Remind Webhook</td><td>Sends a reminder when the accountant triggers it.</td></tr>
+        <tr><td>WF-3</td><td>Slack Response Collector</td><td>Collects cardholder replies from Slack into the record.</td></tr>
+        <tr><td>WF-4</td><td>Weekly Summary to Accountant</td><td>Sends the accountant a weekly rollup.</td></tr>
+        <tr><td>WF-5</td><td>QuickBooks Push</td><td>Pushes completed transactions to QuickBooks.</td></tr>
+        <tr><td>WF-6</td><td>Project Management</td><td>Adds and removes projects.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Stack</h2>
+      <ul class="stack">
+        <li>n8n (self-hosted)</li><li>Plaid</li><li>Slack</li><li>QuickBooks</li>
+        <li>Google Sheets</li><li>Cloudflare Worker</li><li>GitHub Pages</li><li>Google sign-in</li><li>UptimeRobot</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What broke, what I changed</h2>
+      <ul class="fix">
+        <li><b>SQLite would not persist on the host.</b><span>The host's filesystem does not support SQLite file locking. <em>Now the database downloads on boot and uploads on sync</em>, with write-ahead-log checkpoints and checksums so unchanged files are not re-uploaded.</span></li>
+        <li><b>Transactions disappeared between steps.</b><span>A misconfigured Merge node dropped them without an error. <em>Corrected the Merge configuration.</em></span></li>
+        <li><b>Plaid rejected requests.</b><span>The proxy forwarded fields Plaid does not accept (UNKNOWN_FIELDS). <em>The proxy now stops forwarding them.</em></span></li>
+        <li><b>The Worker pointed at old workflows.</b><span>Its workflow map held stale IDs for all six workflows. <em>Replaced them with the current IDs.</em></span></li>
+        <li><b>Uptime checks hit a private URL.</b><span>The monitor pinged the private host directly. <em>It now checks a health endpoint on the Worker.</em></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="foot">Screenshots show Plaid test accounts. Client name, project addresses and personal account details are blurred or removed.</p>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Full size screenshot"><img id="lbimg" alt=""></div>
+<button class="close" id="lbclose" type="button">Close</button>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'), im=document.getElementById('lbimg'), x=document.getElementById('lbclose'), last=null;
+  function open(src,btn){ last=btn; im.src=src; lb.classList.add('open'); x.focus(); }
+  function close(){ lb.classList.remove('open'); im.removeAttribute('src'); if(last) last.focus(); }
+  document.querySelectorAll('.shot').forEach(function(b){ b.addEventListener('click',function(){ open(b.getAttribute('data-full'),b); }); });
+  x.addEventListener('click',close);
+  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && lb.classList.contains('open')) close(); });
+})();
+</script>
